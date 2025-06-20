@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+      - "50052:50052"
+    environment:
+      - SERVICE_NAME=bot
+      - OTLP_ENDPOINT=otel-collector:4317
+    depends_on:
+      - otel-collector
+
+  dapr-sidecar:
+    image: "daprio/daprd:latest"
+    command: [
+      "./daprd",
+      "-app-id", "bot",
+      "-app-port", "50052",
+      "-app-protocol", "grpc",
+      "-components-path", "/components",
+      "-config", "/config/config.yaml",
+      "-dapr-grpc-port", "50002",
+      "-dapr-http-port", "3501"
+    ]
+    volumes:
+      - ./components:/components
+      - ./config:/config
+    network_mode: "service:bot"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - prometheus
+      - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  loki:
+    image: grafana/loki:2.9.3
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki-data:/loki
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000" 
+    volumes:
+      - ./grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+      - loki
+
+volumes:
+  loki-data:

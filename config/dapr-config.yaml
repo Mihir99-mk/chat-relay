@@ -1,0 +1,21 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: daprConfig
+spec:
+  tracing:
+    samplingRate: "1.0"
+    otel:
+      endpointAddress: http://localhost:4317
+  metrics:
+    enabled: true
+  mtls:
+    enabled: false
+  features:
+    - name: Actor.Reentrancy
+      enabled: true
+  logs:
+    level: info
+    includeCaller: false
+    outputPaths:
+      - stdout

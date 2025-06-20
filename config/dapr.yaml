@@ -1,0 +1,18 @@
+version: 1
+apps:
+  - appID: bot
+    appPort: 8080
+    daprHTTPPort: 3500
+    daprGRPCPort: 50001
+    appDirPath: ../bot
+    config: ./dapr-config.yaml
+    command: ["go","run", "main.go"]
+
+  - appID: auth
+    appPort: 8080
+    daprHTTPPort: 3502
+    daprGRPCPort: 50002
+    appDirPath: ../auth
+    config: ./dapr-config.yaml
+    command: ["go","run", "main.go"]
+
