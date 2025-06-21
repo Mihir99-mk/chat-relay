@@ -28,6 +28,7 @@ require (
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
+	github.com/dapr/dapr v1.15.0-rc.17 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/go-oauth2/oauth2/v4 v4.5.3 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
@@ -51,10 +52,12 @@ require (
 	golang.org/x/crypto v0.38.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
 	github.com/cenkalti/backoff/v5 v5.0.2 // indirect
+	github.com/dapr/go-sdk v1.12.0
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect

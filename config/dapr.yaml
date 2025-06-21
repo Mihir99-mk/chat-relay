@@ -1,7 +1,7 @@
 version: 1
 apps:
   - appID: bot
-    appPort: 8080
+    appPort: 8081
     daprHTTPPort: 3500
     daprGRPCPort: 50001
     appDirPath: ../bot

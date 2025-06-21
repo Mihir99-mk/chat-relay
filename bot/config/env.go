@@ -24,6 +24,8 @@ type IEnv interface {
 	GetOTLPEndpoint() string
 	GetSlackBotToken() string
 	GetSlackAppToken() string
+	GetDaprHttpPort() string
+	GetDaprGrpcPort() string
 }
 
 var envOnce sync.Once
@@ -58,6 +60,8 @@ const (
 	OTLP_ENDPOINT       = "OTLP_ENDPOINT"
 	SLACK_BOT_TOKEN     = "SLACK_BOT_TOKEN"
 	SLACK_APP_TOKEN     = "SLACK_APP_TOKEN"
+	DAPR_HTTP_PORT      = "DAPR_HTTP_PORT"
+	DAPR_GRPC_PORT      = "DAPR_GRPC_PORT"
 )
 
 func (e *env) Get(key string) string {
@@ -114,4 +118,12 @@ func (e *env) GetSlackAppToken() string {
 
 func (e *env) GetSlackBotToken() string {
 	return os.Getenv(SLACK_BOT_TOKEN)
+}
+
+func (e *env) GetDaprGrpcPort() string {
+	return os.Getenv(DAPR_GRPC_PORT)
+}
+
+func (e *env) GetDaprHttpPort() string {
+	return os.Getenv(DAPR_HTTP_PORT)
 }

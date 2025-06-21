@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
+	"auth/config"
 	pb "auth/proto/greeterpb"
 
 	"google.golang.org/grpc"
@@ -20,14 +22,16 @@ func (s *greeterServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb
 }
 
 func main() {
-	lis, err := net.Listen("tcp", ":50051")
+	env := config.NewEnv()
+	port := fmt.Sprintf(":%v", env.GetDaprGrpcPort())
+	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
 	pb.RegisterGreeterServer(s, &greeterServer{})
 
-	log.Println("gRPC server listening on :50051")
+	log.Printf("gRPC server listening on %v", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
