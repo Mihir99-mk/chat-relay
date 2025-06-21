@@ -59,10 +59,10 @@ Create a `.env` file or use system environment variables.
 
 ```bash
 # Run mock backend
-go run mock/main.go
+go run main.go
 
 # Run chat relay bot
-go run cmd/main.go
+go run main.go
 ```
 
 ### 🐳 Docker
